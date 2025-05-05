@@ -1,6 +1,6 @@
 using EventBusEventData;
-using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +21,14 @@ public class GameManager : MonoBehaviour
         EventBus.Publish(new PauseChangeEvent(false));
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartLevel();
+        }
+    }
+
     void SetPauseState(bool state)
     {
         EventBus.Publish(new PauseChangeEvent(state));
@@ -34,5 +42,11 @@ public class GameManager : MonoBehaviour
     void OnLevelFailed(LevelFailedEvent e)
     {
         SetPauseState(true);
+    }
+
+    public void RestartLevel()
+    {
+        // Slight lag, will do it better but is fine for now
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
