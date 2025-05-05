@@ -55,4 +55,9 @@ public class TimerManager : MonoBehaviour
 
         timerText.text = $"{(int)Mathf.Ceil(timeLeft)}";
     }
+
+    public void AlterTime(float alterValue)
+    {
+        timeLeft += alterValue;
+    }
 }
