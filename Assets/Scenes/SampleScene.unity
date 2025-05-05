@@ -4957,8 +4957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa208a1b02f9cd45b8260aff22d435e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectables:
-  - {fileID: 5188526561935160937}
+  collectablesParent: {fileID: 977759797}
   totalCollected: 0
   collectablesCounter: {fileID: 1223002519}
 --- !u!4 &2055959560
@@ -5024,6 +5023,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 5367164274401724422, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
+      propertyPath: rotationStrength
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 6965660583142717108, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5031,6 +5034,10 @@ PrefabInstance:
     - target: {fileID: 6965660583142717108, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491377894905475641, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5106,10 +5113,10 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1773694767}
   - {fileID: 619394802}
+  - {fileID: 1186940460}
+  - {fileID: 2055959560}
   - {fileID: 4512733809419342296}
   - {fileID: 977759797}
   - {fileID: 837675006}
-  - {fileID: 1186940460}
-  - {fileID: 2055959560}
   - {fileID: 1671528086}
   - {fileID: 1772612314}
