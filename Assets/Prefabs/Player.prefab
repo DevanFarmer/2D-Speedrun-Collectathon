@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationStrength: 200
+  rotationType: 0
 --- !u!114 &1020307366706435226
 MonoBehaviour:
   m_ObjectHideFlags: 0

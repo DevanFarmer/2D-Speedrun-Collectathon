@@ -6,6 +6,10 @@ public class PlayerTurnComponent : MonoBehaviour
 {
     [SerializeField] float rotationStrength;
 
+    public enum RotationType { Smooth, Instant }
+
+    [SerializeField] RotationType rotationType;
+
     Rigidbody2D rb;
 
     float rotateInput;
@@ -30,6 +34,32 @@ public class PlayerTurnComponent : MonoBehaviour
 
     void Update()
     {
+        if (rotationType == RotationType.Smooth)
+        {
+            HandleSmoothInput();
+        }
+        else
+            HandleInstantInput();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!canRotate) return;
+        if (rotationType == RotationType.Smooth) ApplySmoothRotation();
+    }
+
+    void ApplySmoothRotation()
+    {
+        rb.MoveRotation(rb.rotation + rotateInput * rotationStrength * Time.fixedDeltaTime);
+    }
+
+    void ApplyInstantRotation(int modifier)
+    {
+        rb.MoveRotation(rb.rotation + rotationStrength * modifier);
+    }
+
+    void HandleSmoothInput()
+    {
         if (Input.GetKey(KeyCode.A))
         {
             rotateInput = 1f;
@@ -38,19 +68,20 @@ public class PlayerTurnComponent : MonoBehaviour
         {
             rotateInput = -1f;
         }
-        else 
+        else
             rotateInput = 0f;
     }
 
-    private void FixedUpdate()
+    void HandleInstantInput()
     {
-        if (!canRotate) return;
-        ApplyRotation();
-    }
-
-    void ApplyRotation()
-    {
-        rb.MoveRotation(rb.rotation + rotateInput * rotationStrength * Time.fixedDeltaTime);
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ApplyInstantRotation(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            ApplyInstantRotation(-1);
+        }
     }
 
     void OnPauseChange(PauseChangeEvent e)
