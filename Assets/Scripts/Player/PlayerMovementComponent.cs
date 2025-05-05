@@ -14,6 +14,9 @@ public class PlayerMovementComponent : MonoBehaviour
     [SerializeField] float boostSpeed;
     [SerializeField] float slowDownSpeed;
 
+    [Header("Speed Modifier")]
+    [SerializeField] float speedModifier;
+
     [Header("Enable/Disable Movement")]
     [SerializeField] bool canMove;
 
@@ -49,7 +52,7 @@ public class PlayerMovementComponent : MonoBehaviour
 
     void MoveForward()
     {
-        rb.MovePosition(transform.position + transform.up * currentSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(transform.position + transform.up * (currentSpeed + speedModifier) * Time.fixedDeltaTime);
     }
 
     void OnPauseChange(PauseChangeEvent e)
@@ -72,5 +75,10 @@ public class PlayerMovementComponent : MonoBehaviour
         }
         else
             currentSpeed = normalSpeed;
+    }
+
+    public void AlterSpeedModifier(float speedValue)
+    {
+        speedModifier += speedValue;
     }
 }
