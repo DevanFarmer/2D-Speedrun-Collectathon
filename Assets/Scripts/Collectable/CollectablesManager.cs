@@ -9,8 +9,7 @@ public class CollectablesManager : MonoBehaviour
 
     [SerializeField] int totalCollected;
 
-    [SerializeField] TextMeshProUGUI collectedCounter;
-    [SerializeField] TextMeshProUGUI totalCounter;
+    [SerializeField] TextMeshProUGUI collectablesCounter;
 
     void OnEnable()
     {
@@ -22,19 +21,23 @@ public class CollectablesManager : MonoBehaviour
         EventBus.Unsubscribe<CollectCollectableEvent>(OnCollect);
     }
 
+    private void Start()
+    {
+        UpdateCounter();
+    }
+
     void OnCollect(CollectCollectableEvent e)
     {
         totalCollected++;
 
-        UpdateCounters();
+        UpdateCounter();
 
         CheckIfCollectedAll();
     }
 
-    void UpdateCounters()
+    void UpdateCounter()
     {
-        collectedCounter.text = totalCollected.ToString();
-        totalCounter.text = collectables.Count.ToString();
+        collectablesCounter.text = $"{totalCollected} / {collectables.Count}";
     }
 
     void CheckIfCollectedAll()
