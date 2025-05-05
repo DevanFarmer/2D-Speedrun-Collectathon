@@ -12,14 +12,12 @@ public class TimerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<LevelCompletedEvent>(OnLevelCompleted);
-        EventBus.Subscribe<LevelFailedEvent>(OnLevelFailed);
+        EventBus.Subscribe<PauseChangeEvent>(OnPauseChange);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<LevelCompletedEvent>(OnLevelCompleted);
-        EventBus.Unsubscribe<LevelFailedEvent>(OnLevelFailed);
+        EventBus.Unsubscribe<PauseChangeEvent>(OnPauseChange);
     }
 
     void Start()
@@ -39,14 +37,9 @@ public class TimerManager : MonoBehaviour
         }
     }
 
-    void OnLevelCompleted(LevelCompletedEvent e)
+    void OnPauseChange(PauseChangeEvent e)
     {
-        paused = true;
-    }
-
-    void OnLevelFailed(LevelFailedEvent e)
-    {
-        paused = true;
+        paused = e.IsPaused;
     }
 
     void LevelFailed()
