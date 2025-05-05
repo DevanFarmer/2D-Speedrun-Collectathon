@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject levelOverPanel;
-    [SerializeField] TextMeshProUGUI levelOverTitle;
-
     private void OnEnable()
     {
         EventBus.Subscribe<LevelCompletedEvent>(OnLevelCompleted);
@@ -15,14 +12,11 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<LevelCompletedEvent>(OnLevelCompleted);
-        EventBus.Unsubscribe<LevelFailedEvent>(OnLevelFailed);
+        
     }
 
     private void Start()
     {
-        ShowLevelOverPanel(false);
-
         EventBus.Publish(new PauseChangeEvent(false));
     }
 
@@ -33,36 +27,11 @@ public class GameManager : MonoBehaviour
 
     void OnLevelCompleted(LevelCompletedEvent e)
     {
-        LevelOver();
-
-        // Set Completed UI
-        SetLevelOverUI("Level Complete!");
+        SetPauseState(true);
     }
 
     void OnLevelFailed(LevelFailedEvent e)
     {
-        LevelOver();
-
-        // Set Failed UI
-        SetLevelOverUI("Level Failed!");
-    }
-
-    void LevelOver()
-    {
-        // Pause Game
         SetPauseState(true);
-
-        // Show Level Over UI
-        ShowLevelOverPanel(true);
-    }
-
-    void ShowLevelOverPanel(bool state)
-    {
-        levelOverPanel.SetActive(state);
-    }
-
-    void SetLevelOverUI(string title)
-    {
-        levelOverTitle.text = title;
     }
 }
