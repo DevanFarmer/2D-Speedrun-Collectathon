@@ -16,6 +16,8 @@ public class PlayerTurnComponent : MonoBehaviour
 
     bool canRotate;
 
+    int direction;
+
     private void OnEnable()
     {
         EventBus.Subscribe<PauseChangeEvent>(OnPauseChange);
@@ -30,6 +32,8 @@ public class PlayerTurnComponent : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
+
+        direction = 1;
     }
 
     void Update()
@@ -50,12 +54,12 @@ public class PlayerTurnComponent : MonoBehaviour
 
     void ApplySmoothRotation()
     {
-        rb.MoveRotation(rb.rotation + rotateInput * rotationStrength * Time.fixedDeltaTime);
+        rb.MoveRotation(rb.rotation + (rotateInput * direction) * rotationStrength * Time.fixedDeltaTime);
     }
 
     void ApplyInstantRotation(int modifier)
     {
-        rb.MoveRotation(rb.rotation + rotationStrength * modifier);
+        rb.MoveRotation(rb.rotation + rotationStrength * modifier * direction);
     }
 
     void HandleSmoothInput()
@@ -88,5 +92,10 @@ public class PlayerTurnComponent : MonoBehaviour
     {
         if (e.IsPaused) canRotate = false;
         else canRotate = true;
+    }
+
+    public void ReverseControls()
+    {
+        direction *= -1;
     }
 }
