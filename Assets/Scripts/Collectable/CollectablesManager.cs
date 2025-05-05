@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class CollectablesManager : MonoBehaviour
 {
-    [SerializeField] List<Transform> collectables = new();
+    [SerializeField] Transform collectablesParent;
+    int totalCollectables;
 
     [SerializeField] int totalCollected;
 
@@ -23,6 +24,7 @@ public class CollectablesManager : MonoBehaviour
 
     private void Start()
     {
+        SetTotalCollectables();
         UpdateCounter();
     }
 
@@ -37,13 +39,18 @@ public class CollectablesManager : MonoBehaviour
 
     void UpdateCounter()
     {
-        collectablesCounter.text = $"{totalCollected} / {collectables.Count}";
+        collectablesCounter.text = $"{totalCollected} / {totalCollectables}";
     }
 
     void CheckIfCollectedAll()
     {
-        if (totalCollected < collectables.Count) return;
+        if (totalCollected < totalCollectables) return;
 
         EventBus.Publish(new LevelCompletedEvent());
+    }
+
+    void SetTotalCollectables()
+    {
+        totalCollectables = collectablesParent.childCount;
     }
 }
