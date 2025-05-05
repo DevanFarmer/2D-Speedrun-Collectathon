@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ForwardMovementComponent : MonoBehaviour
+public class PlayerMovementComponent : MonoBehaviour
 {
     Rigidbody2D rb;
 
