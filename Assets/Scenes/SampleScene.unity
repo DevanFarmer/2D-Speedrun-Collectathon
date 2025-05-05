@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 859979179}
-  timeLeft: 30
+  timeLeft: 45
   paused: 0
 --- !u!4 &1186940460
 Transform:
