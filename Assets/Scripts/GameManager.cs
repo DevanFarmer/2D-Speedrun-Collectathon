@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        EventBus.Unsubscribe<LevelCompletedEvent>(OnLevelCompleted);
+        EventBus.Unsubscribe<LevelFailedEvent>(OnLevelFailed);
     }
 
     private void Start()
