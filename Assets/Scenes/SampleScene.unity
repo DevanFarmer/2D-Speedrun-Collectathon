@@ -1786,11 +1786,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223002517}
   m_CullTransparentMesh: 1
+--- !u!1 &1346493631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6965660583142717108, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
+  m_PrefabInstance: {fileID: 4512733809419342296}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1346493633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3544288753992735547, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
   m_PrefabInstance: {fileID: 4512733809419342296}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1346493638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346493631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7798dbe7b677a0844b5708208307703e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1571631302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2282,8 +2299,8 @@ GameObject:
   - component: {fileID: 1811905537}
   - component: {fileID: 1811905536}
   m_Layer: 0
-  m_Name: Tilemap
-  m_TagString: Untagged
+  m_Name: Walls Tilemap
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5365,7 +5382,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6965660583142717108, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1346493638}
   m_SourcePrefab: {fileID: 100100000, guid: 7d10b920c146d6e499f45f7fb864104f, type: 3}
 --- !u!1001 &5188526561935160936
 PrefabInstance:
