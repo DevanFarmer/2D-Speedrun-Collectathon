@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Wall
+  - Time Manager
   layers:
   - Default
   - TransparentFX
