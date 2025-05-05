@@ -19,6 +19,13 @@ public class GameManager : MonoBehaviour
         EventBus.Unsubscribe<LevelFailedEvent>(OnLevelFailed);
     }
 
+    private void Start()
+    {
+        ShowLevelOverPanel(false);
+
+        EventBus.Publish(new PauseChangeEvent(false));
+    }
+
     void SetPauseState(bool state)
     {
         EventBus.Publish(new PauseChangeEvent(state));

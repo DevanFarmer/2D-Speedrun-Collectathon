@@ -1,3 +1,5 @@
+using EventBusEventData;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerTurnComponent : MonoBehaviour
@@ -7,6 +9,18 @@ public class PlayerTurnComponent : MonoBehaviour
     Rigidbody2D rb;
 
     float rotateInput;
+
+    bool canRotate;
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<PauseChangeEvent>(OnPauseChange);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<PauseChangeEvent>(OnPauseChange);
+    }
 
     void Start()
     {
@@ -30,11 +44,18 @@ public class PlayerTurnComponent : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canRotate) return;
         ApplyRotation();
     }
 
     void ApplyRotation()
     {
         rb.MoveRotation(rb.rotation + rotateInput * rotationStrength * Time.fixedDeltaTime);
+    }
+
+    void OnPauseChange(PauseChangeEvent e)
+    {
+        if (e.IsPaused) canRotate = false;
+        else canRotate = true;
     }
 }
