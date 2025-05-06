@@ -19,58 +19,52 @@ public class BeamGenerationComponent : MonoBehaviour
 
     private void OnEnable()
     {
-        RegenerateBeams();
+        if (Application.isPlaying)
+            RegenerateBeams();
+    }
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        if (!generateRuntimeBeams)
+            return;
+
+        Gizmos.color = beamColor;
+        float angleStep = 360f / beamCount;
+
+        for (int i = 0; i < beamCount; i++)
+        {
+            float angle = angleStep * i;
+            Quaternion rot = Quaternion.Euler(0f, 0f, angle);
+            Vector3 direction = rot * Vector3.up;
+            Vector3 start = transform.position;
+            Vector3 end = start + direction * beamLength;
+
+            Gizmos.DrawLine(start, end);
+            // Optional: Draw beam width at end
+            Vector3 rightOffset = rot * Vector3.right * (beamWidth / 2f);
+            Gizmos.DrawLine(end - rightOffset, end + rightOffset);
+        }
+#endif
     }
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        // Prevent immediate regeneration in edit mode to avoid hierarchy conflicts
-        if (!Application.isPlaying)
-        {
-            UnityEditor.EditorApplication.delayCall += () =>
-            {
-                if (this != null) // ensure object still exists
-                    RegenerateBeams();
-            };
-        }
-        else
-        {
-            RegenerateBeams();
-        }
+        UnityEditor.SceneView.RepaintAll(); // To update the debug drawing
     }
-#else
-private void OnValidate()
-{
-    RegenerateBeams();
-}
 #endif
 
     private void RegenerateBeams()
     {
+        if (!Application.isPlaying)
+            return;
+
+        // Destroy previously created beams
         for (int i = runtimeBeams.Count - 1; i >= 0; i--)
         {
-            GameObject beam = runtimeBeams[i];
-            if (beam != null)
-            {
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                {
-                    var toDestroy = beam;
-                    UnityEditor.EditorApplication.delayCall += () =>
-                    {
-                        if (toDestroy != null)
-                            DestroyImmediate(toDestroy);
-                    };
-                }
-                else
-                {
-                    Destroy(beam);
-                }
-#else
-        Destroy(beam);
-#endif
-            }
+            if (runtimeBeams[i] != null)
+                Destroy(runtimeBeams[i]);
         }
         runtimeBeams.Clear();
 
@@ -86,14 +80,7 @@ private void OnValidate()
 
             if (beamPrefab != null)
             {
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                    beamObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(beamPrefab, transform);
-                else
-                    beamObj = Instantiate(beamPrefab, transform);
-#else
-            beamObj = Instantiate(beamPrefab, transform);
-#endif
+                beamObj = Instantiate(beamPrefab, transform);
             }
             else
             {
@@ -106,19 +93,16 @@ private void OnValidate()
 
             beamObj.name = $"Beam_{i}";
 
-            // Reset transform
+            // Set transform
             beamObj.transform.localScale = new Vector3(beamWidth, beamLength, 1f);
             beamObj.transform.localPosition = Vector3.zero;
             beamObj.transform.localRotation = Quaternion.identity;
 
-            // Rotate around Z
+            // Rotate around Z and offset upward
             beamObj.transform.Rotate(Vector3.forward, angle);
-
-            // Offset the beam so that its BOTTOM is at the center
-            // (remember: local UP points along beam's length, since we're using vertical scale)
             beamObj.transform.localPosition += beamObj.transform.up * (beamLength / 2f);
 
-            beamObj.hideFlags = HideFlags.DontSave; // prevents beams from persisting after exiting play mode
+            beamObj.hideFlags = HideFlags.DontSave;
 
             runtimeBeams.Add(beamObj);
         }
