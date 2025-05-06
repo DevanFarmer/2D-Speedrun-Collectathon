@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4030049241ada8145a4743074b2b381c, type: 3}
-  m_Name: Test TimeEffect
+  m_Name: Give Time Effect
   m_EditorClassIdentifier: 
   alterValue: 2
