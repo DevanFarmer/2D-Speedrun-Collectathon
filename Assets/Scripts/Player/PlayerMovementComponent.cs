@@ -9,9 +9,12 @@ public class PlayerMovementComponent : MonoBehaviour
     [SerializeField] float currentSpeed;
 
     [Header("Speed Values")]
-    [SerializeField] bool canChangeSpeed;
     [SerializeField] float normalSpeed;
+    [Header("Boost")]
+    [SerializeField] bool canBoost;
     [SerializeField] float boostSpeed;
+    [Header("Slow Down")]
+    [SerializeField] bool canSlowDown;
     [SerializeField] float slowDownSpeed;
 
     [Header("Speed Modifier")]
@@ -63,13 +66,11 @@ public class PlayerMovementComponent : MonoBehaviour
 
     void HandleInput()
     {
-        if (!canChangeSpeed) return;
-
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && canBoost)
         {
             currentSpeed = boostSpeed;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S) && canSlowDown)
         {
             currentSpeed = slowDownSpeed;
         }
